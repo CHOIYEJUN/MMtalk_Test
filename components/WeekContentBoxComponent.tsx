@@ -28,7 +28,6 @@ const WeekContentBoxComponent:
       onAddTodo(weekNumber, newTodo);
       setNewTodo('');
     }
-
   };
   const progressPercentage = (completedTodos / totalTodos) * 100 || 0;
 
