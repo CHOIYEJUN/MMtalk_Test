@@ -1,5 +1,5 @@
 // App.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { View, Text, SafeAreaView } from 'react-native';
 import WeekComponent from './components/WeekComponent';
 import WeekContentBoxComponent from './components/WeekContentBoxComponent';
@@ -74,6 +74,11 @@ const App: React.FC = () => {
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
   const [todoData, setTodoData] = useState(initialData);
 
+  useEffect(() => {
+    handleSelectWeek(1);
+  }, []);
+
+
   const handleSelectWeek = (weekNumber: number) => {
     setSelectedWeek(weekNumber);
   };
@@ -88,15 +93,15 @@ const App: React.FC = () => {
   };
 
   const handleToggleTodo = (weekNumber: number, index: number) => {
-    setTodoData((prevData) =>
+    setTodoData(
+      (prevData) =>
       prevData.map((todo, i) =>
-        i === index && todo.weekNumber === weekNumber
+         todo.weekNumber === weekNumber && i === index
           ? { ...todo, completed: !todo.completed }
           : todo
       )
     );
   };
-
 
 
   return (

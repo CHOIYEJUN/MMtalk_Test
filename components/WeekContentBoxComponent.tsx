@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput,  Button, ScrollView, StyleSheet } from 'react-native';
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+import CheckBox from '@react-native-community/checkbox';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 interface TodoItem {
   weekNumber: number;
   content: string;
@@ -61,10 +62,10 @@ const WeekContentBoxComponent:
       {todos.map((todo, index) => (
         <View key={index} style={styles.todoItem}>
           <BouncyCheckbox
-            disableBuiltInState={todo.completed}
-            onPress={(isChecked: boolean) => handleToggleTodo(index)}
+            isChecked={todo.completed}
+            onPress={() => handleToggleTodo(index)}
           />
-          <Text style={styles.todoText}>{todo.content}</Text>
+          <Text style={[styles.todoText , {textDecorationLine : todo.completed ? 'line-through' : 'none' } ]}>{todo.content}</Text>
         </View>
       ))}
 
