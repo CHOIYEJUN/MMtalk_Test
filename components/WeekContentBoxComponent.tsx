@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput,  Button, ScrollView, StyleSheet } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 interface TodoItem {
   weekNumber: number;
@@ -19,6 +18,9 @@ const WeekContentBoxComponent:
   React.FC<WeekContentBoxComponentProps> = ({
   weekNumber, todos, onAddTodo, onToggleTodo, }) => {
   const [newTodo, setNewTodo] = useState('');
+  const totalTodos = todos.length;
+  const completedTodos = todos.filter((todo) => todo.completed).length;
+
 
   const handleAddTodo = () => {
     if (newTodo.trim() !== '') {
@@ -27,9 +29,11 @@ const WeekContentBoxComponent:
     }
 
   };
+  const progressPercentage = (completedTodos / totalTodos) * 100 || 0;
 
   const handleToggleTodo = (index: number) => {
     onToggleTodo(weekNumber, index);
+    console.log(weekNumber, index);
   };
 
   return (
@@ -58,6 +62,8 @@ const WeekContentBoxComponent:
       </View>
 
 
+
+
       <Text style={styles.header}>Week {weekNumber} Todo List</Text>
       {todos.map((todo, index) => (
         <View key={index} style={styles.todoItem}>
@@ -65,7 +71,14 @@ const WeekContentBoxComponent:
             isChecked={todo.completed}
             onPress={() => handleToggleTodo(index)}
           />
-          <Text style={[styles.todoText , {textDecorationLine : todo.completed ? 'line-through' : 'none' } ]}>{todo.content}</Text>
+          <Text
+            style={
+            [
+              styles.todoText ,
+              {textDecorationLine : todo.completed ? 'line-through' : 'none' }
+            ]}>
+            {todo.content}
+          </Text>
         </View>
       ))}
 
@@ -103,6 +116,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     width: '100%',
+  },
+  progressText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  progressBar: {
+    height: 20,
+    backgroundColor: 'lightgray',
+    borderRadius: 5,
+    overflow: 'hidden',
   },
 });
 

@@ -55,8 +55,63 @@ Data 자체는 잘 get 하고 set 하는것 같은데,  해당 체크박스를 �
 디버그 찍는 방법부터 찾아봐야겠다ㅠㅠㅠ
 
 
-## 구현 
+## 2023 12 01 0시 45분  문제해결
 
+### 해결해따
 
+> 멍청했다...
 
+```javascript
+// TodoList 체크 박스 체크하면 체크된 데이터 확인해서 
+// completed 값 바꿔주는 함수
+  const handleToggleTodo = (weekNumber: number, index: number) => {
+    setTodoData(
+      (prevData) =>
+      prevData.map((todo, i) =>
+        
+        // 이부분이 문제였다. ( i === index)
+         todo.weekNumber === weekNumber && i === index
+          ? { ...todo, completed: !todo.completed }
+          : todo
+      )
+    );
+  };
+```
+weekNumber 1에 3개의 데이터가 있고 weekNumber 2에 3개의 데이터가 있을때
+weekNumber 2 의 첫번째 todoList 를 클릭하면 weekNumber : 1 index : 0 이 나오지만,
+i 에는 3이 들어가 버린 것이였다.... 왜냐면 prevData 는 0,1,2, "3" 번째를 돌고있으니...
 
+#### 그래서 아래와 같이 수정하였다. 
+
+```javascript
+  const handleToggleTodo = (weekNumber: number, index: number) => {
+  setTodoData((prevData) => {
+    console.log('Previous Data:', prevData);
+
+    // 주어진 주차에 해당하는 todo만 필터링
+    const filteredData = prevData.filter((todo) => todo.weekNumber === weekNumber);
+
+    // 필터링된 todo를 map을 사용하여 업데이트
+    const updatedData = filteredData.map((todo, todoIndex) => {
+      console.log(todoIndex + ' Todo:', todo);
+      if (todoIndex === index) {
+        // 주어진 index에 해당하는 todo의 completed를 토글
+        const updatedTodo = {
+          ...todo,
+          completed: !todo.completed,
+        };
+        console.log('Updated Todo:', updatedTodo);
+        return updatedTodo;
+      }
+      return todo;
+    });
+    // 기존 데이터 중에서 해당 주차의 데이터만 업데이트된 데이터로 교체
+    return prevData.map((todo) =>
+      todo.weekNumber === weekNumber ? updatedData.shift() || todo : todo
+    );
+  });
+};
+```
+받아온 weekNumber 에 해당하는 데이터만 필터링을 해주고,
+필터링된 데이터에서만 비교하였다.
+나머지는 따로 넣어주는 형태로 기능을 수정했다!!

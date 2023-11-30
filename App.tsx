@@ -93,14 +93,27 @@ const App: React.FC = () => {
   };
 
   const handleToggleTodo = (weekNumber: number, index: number) => {
-    setTodoData(
-      (prevData) =>
-      prevData.map((todo, i) =>
-         todo.weekNumber === weekNumber && i === index
-          ? { ...todo, completed: !todo.completed }
-          : todo
-      )
-    );
+    setTodoData((prevData) => {
+      // 주어진 주차에 해당하는 todo만 필터링
+      const filteredData = prevData.filter((todo) => todo.weekNumber === weekNumber);
+      // 필터링된 todo를 map을 사용하여 업데이트
+      const updatedData = filteredData.map((todo, todoIndex) => {
+        if (todoIndex === index) {
+          // 주어진 index에 해당하는 todo의 completed를 토글
+          const updatedTodo = {
+            ...todo,
+            completed: !todo.completed,
+          };
+          console.log('Updated Todo:', updatedTodo);
+          return updatedTodo;
+        }
+        return todo;
+      });
+      // 기존 데이터 중에서 해당 주차의 데이터만 업데이트된 데이터로 교체
+      return prevData.map((todo) =>
+        todo.weekNumber === weekNumber ? updatedData.shift() || todo : todo
+      );
+    });
   };
 
 
