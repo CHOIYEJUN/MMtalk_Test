@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput,  Button, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, ScrollView, StyleSheet, TouchableOpacity, Image } from "react-native";
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import CheckBox from '@react-native-community/checkbox';
 interface TodoItem {
@@ -13,14 +13,19 @@ interface WeekContentBoxComponentProps {
   todos: TodoItem[];
   onAddTodo: (weekNumber: number, content: string) => void;
   onToggleTodo: (weekNumber: number, index: number) => void;
+  onDeleteTodo: (weekNumber: number, index: number) => void;
 }
 
 const WeekContentBoxComponent:
   React.FC<WeekContentBoxComponentProps> = ({
-  weekNumber, todos, onAddTodo, onToggleTodo, }) => {
+  weekNumber, todos, onAddTodo, onToggleTodo, onDeleteTodo, editMode}) => {
   const [newTodo, setNewTodo] = useState('');
   const totalTodos = todos.length;
   const completedTodos = todos.filter((todo) => todo.completed).length;
+
+  const handleDeleteTodo = (index: number) => {
+    onDeleteTodo(weekNumber, index);
+  };
 
   const handleAddTodo = () => {
     if (newTodo.trim() !== '') {
@@ -32,7 +37,6 @@ const WeekContentBoxComponent:
 
   const handleToggleTodo = (index: number) => {
     onToggleTodo(weekNumber, index);
-    console.log(weekNumber, index);
   };
 
   return (
@@ -79,14 +83,21 @@ const WeekContentBoxComponent:
         </View>
       </View>
 
-
-      <Text style={styles.header}>Week {weekNumber} Todo List</Text>
       {todos.map((todo, index) => (
         <View key={index} style={styles.todoItem}>
-          <CheckBox
-            onValueChange={() => handleToggleTodo(index)}
-            value={todo.completed}
-          />
+          {editMode ? (
+            <TouchableOpacity onPress={() => handleDeleteTodo(index)}>
+              <Image
+                source={require('../image/delete-icon.png')} // 쓰레기통 아이콘 이미지 경로로 변경
+                style={{ width: 20, height: 20}}
+              />
+            </TouchableOpacity>
+          ) : (
+            <CheckBox
+              onValueChange={() => handleToggleTodo(index)}
+              value={todo.completed}
+            />
+          )}
           <Text
             style={
             [
@@ -117,6 +128,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+    marginTop: 10,
   },
   todoItem: {
     flexDirection: 'row',
@@ -148,6 +160,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
     borderRadius: 5,
     width: '100%',
+    marginBottom: 20,
+
 
   },
 });

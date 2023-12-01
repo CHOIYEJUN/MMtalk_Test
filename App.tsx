@@ -73,6 +73,7 @@ const App: React.FC = () => {
 
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
   const [todoData, setTodoData] = useState(initialData);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     handleSelectWeek(1);
@@ -89,7 +90,27 @@ const App: React.FC = () => {
       content,
       completed: false,
     };
-    setTodoData((prevData) => [...prevData, newTodo]);
+    // 입력한거 맨 위로 보냄
+    setTodoData((prevData) => [newTodo, ...prevData]);
+  };
+
+  const handleEditTodo = () => {
+    setEditMode(!editMode);
+  };
+
+  const handleDeleteTodo = (weekNumber: number, index: number) => {
+    console.log(weekNumber, index);
+    setTodoData((prevData) => {
+      const filteredData = prevData.filter((todo) => todo.weekNumber === weekNumber);
+      console.log(filteredData);
+
+      const updatedData = filteredData.filter((_, todoIndex) => todoIndex !== index);
+      console.log(updatedData);
+
+      return prevData.filter((todo) =>
+        todo.weekNumber === weekNumber ? updatedData.includes(todo) : true
+      );
+    });
   };
 
   const handleToggleTodo = (weekNumber: number, index: number) => {
@@ -104,7 +125,6 @@ const App: React.FC = () => {
             ...todo,
             completed: !todo.completed,
           };
-          console.log('Updated Todo:', updatedTodo);
           return updatedTodo;
         }
         return todo;
@@ -142,7 +162,10 @@ const App: React.FC = () => {
             fontWeight: 'bold',
             textAlign: 'right',
           }}
-        >Edit</Text>
+          onPress={handleEditTodo}
+        >
+          {editMode ? 'Done' : 'Edit'}
+        </Text>
       </View>
       <WeekComponent weeks={40} onSelectWeek={handleSelectWeek} />
 
@@ -152,6 +175,8 @@ const App: React.FC = () => {
           todos={todoData.filter((todo) => todo.weekNumber === selectedWeek)}
           onAddTodo={handleAddTodo}
           onToggleTodo={handleToggleTodo}
+          onDeleteTodo={handleDeleteTodo} // 삭제 함수 추가
+          editMode={editMode} // editMode 상태 전달
         />
       )}
 
