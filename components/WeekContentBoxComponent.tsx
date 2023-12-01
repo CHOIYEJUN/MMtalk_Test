@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, ScrollView, StyleSheet, TouchableOpacity, Image } from "react-native";
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import CheckBox from '@react-native-community/checkbox';
 interface TodoItem {
   weekNumber: number;
@@ -22,7 +21,6 @@ const WeekContentBoxComponent:
   const [newTodo, setNewTodo] = useState('');
   const totalTodos = todos.length;
   const completedTodos = todos.filter((todo) => todo.completed).length;
-
   const handleDeleteTodo = (index: number) => {
     onDeleteTodo(weekNumber, index);
   };
@@ -62,53 +60,91 @@ const WeekContentBoxComponent:
           onPress={handleAddTodo}
           color={'#FF7484'}
         />
-
       </View>
 
-      <View style={styles.progressBox}>
-        <Text style={styles.progressText}>{`${completedTodos} of ${totalTodos} completed`}</Text>
-        <Text style={styles.progressText}>{`${progressPercentage.toFixed()}%`}</Text>
-      </View>
-
-      <View style={styles.progressBar}>
+      {todos.length === 0 && (
         <View
           style={{
-            width: progressPercentage + '%',
-            height: '100%',
-            backgroundColor: '#FF7484',
-            borderRadius: 5,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 20,
           }}
         >
-
-        </View>
-      </View>
-
-      {todos.map((todo, index) => (
-        <View key={index} style={styles.todoItem}>
-          {editMode ? (
-            <TouchableOpacity onPress={() => handleDeleteTodo(index)}>
-              <Image
-                source={require('../image/delete-icon.png')} // 쓰레기통 아이콘 이미지 경로로 변경
-                style={{ width: 20, height: 20}}
-              />
-            </TouchableOpacity>
-          ) : (
-            <CheckBox
-              onValueChange={() => handleToggleTodo(index)}
-              value={todo.completed}
+            <Image
+              source={require('../image/noData.png')} // 쓰레기통 아이콘 이미지 경로로 변경
+              style={{ width: 200, height: 150, marginTop: 20}}
             />
-          )}
-          <Text
-            style={
-            [
-              styles.todoText ,
-              {textDecorationLine : todo.completed ? 'line-through' : 'none' }
-            ]}>
-            {todo.content}
+            <Text style={{
+              marginTop: 20,
+              color: 'grey',
+              fontSize: 20,
+              fontWeight:600
+            }}>
+              No checklists
+            </Text>
+          <Text style={{
+            marginTop: 5,
+            color: 'grey',
+            fontSize: 14,
+          }}>
+            Add checklists that should be checked weekly.
           </Text>
         </View>
-      ))}
+        )}
 
+      {todos.length > 0 && (
+      <View
+        style={{
+          marginTop: 20,
+          width: '100%',
+          alignItems: 'center',
+        }}
+      >
+        <View style={styles.progressBox}>
+          <Text style={styles.progressText}>{`${completedTodos} of ${totalTodos} completed`}</Text>
+          <Text style={styles.progressText}>{`${progressPercentage.toFixed()}%`}</Text>
+        </View>
+
+        <View style={styles.progressBar}>
+          <View
+            style={{
+              width: progressPercentage + '%',
+              height: '100%',
+              backgroundColor: '#FF7484',
+              borderRadius: 5,
+            }}
+          >
+
+          </View>
+        </View>
+
+        {todos.map((todo, index) => (
+          <View key={index} style={styles.todoItem}>
+            {editMode ? (
+              <TouchableOpacity onPress={() => handleDeleteTodo(index)}>
+                <Image
+                  source={require('../image/delete-icon.png')} // 쓰레기통 아이콘 이미지 경로로 변경
+                  style={{ width: 20, height: 20}}
+                />
+              </TouchableOpacity>
+            ) : (
+              <CheckBox
+                onValueChange={() => handleToggleTodo(index)}
+                value={todo.completed}
+              />
+            )}
+            <Text
+              style={
+              [
+                styles.todoText ,
+                {textDecorationLine : todo.completed ? 'line-through' : 'none' }
+              ]}>
+              {todo.content}
+            </Text>
+          </View>
+        ))}
+      </View>
+      )}
 
     </ScrollView>
   );

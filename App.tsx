@@ -65,6 +65,21 @@ const initialData = [
     weekNumber: 4,
     content: 'Take folic acid',
     completed: false,
+  },
+  {
+    weekNumber: 15,
+    content: 'Eat leafy greens to increase iron intake. ',
+    completed: false,
+  },
+  {
+    weekNumber: 15,
+    content: 'Schedule an appointment with a OBGYN.',
+    completed: false,
+  },
+  {
+    weekNumber: 15,
+    content: 'Take folic acid',
+    completed: false,
   }
 ];
 
