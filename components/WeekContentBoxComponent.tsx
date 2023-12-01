@@ -22,7 +22,6 @@ const WeekContentBoxComponent:
   const totalTodos = todos.length;
   const completedTodos = todos.filter((todo) => todo.completed).length;
 
-
   const handleAddTodo = () => {
     if (newTodo.trim() !== '') {
       onAddTodo(weekNumber, newTodo);
@@ -62,7 +61,23 @@ const WeekContentBoxComponent:
 
       </View>
 
+      <View style={styles.progressBox}>
+        <Text style={styles.progressText}>{`${completedTodos} of ${totalTodos} completed`}</Text>
+        <Text style={styles.progressText}>{`${progressPercentage.toFixed()}%`}</Text>
+      </View>
 
+      <View style={styles.progressBar}>
+        <View
+          style={{
+            width: progressPercentage + '%',
+            height: '100%',
+            backgroundColor: '#FF7484',
+            borderRadius: 5,
+          }}
+        >
+
+        </View>
+      </View>
 
 
       <Text style={styles.header}>Week {weekNumber} Todo List</Text>
@@ -98,6 +113,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
+  progressBox : {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
   todoItem: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -124,10 +144,11 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   progressBar: {
-    height: 20,
+    height: 5,
     backgroundColor: 'lightgray',
     borderRadius: 5,
-    overflow: 'hidden',
+    width: '100%',
+
   },
 });
 
