@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 
 interface WeekComponentProps {
@@ -8,16 +8,27 @@ interface WeekComponentProps {
 
 const WeekComponent: React.FC<WeekComponentProps> = ({ weeks, onSelectWeek  }) => {
   const [selectedWeek, setSelectedWeek] = useState(1);
+  const flatListRef = useRef<FlatList | null>(null);
 
   const onPressWeek = (weekNumber: number) => {
     setSelectedWeek(weekNumber);
     onSelectWeek(weekNumber);
   }
 
+  const onMomentumScrollEnd = (event: any) => {
+    if (flatListRef.current) {
+      const contentOffset = event.nativeEvent.contentOffset.x;
+      const centerIndex = Math.round(contentOffset / (45 + 1 * 5)); // Adjust for button width and margin
+      const selectedWeekFromIndex = centerIndex + 1;
+      setSelectedWeek(selectedWeekFromIndex);
+      onSelectWeek(selectedWeekFromIndex);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <FlatList
+        ref={(ref) => (flatListRef.current = ref)}
         horizontal
         data={Array.from({ length: weeks }, (_, index) => index + 1)}
         renderItem={({ item }) => (
@@ -47,6 +58,7 @@ const WeekComponent: React.FC<WeekComponentProps> = ({ weeks, onSelectWeek  }) =
           </TouchableOpacity>
         )}
         keyExtractor={(item) => item.toString()}
+        onMomentumScrollEnd={onMomentumScrollEnd}
       />
     </View>
   );

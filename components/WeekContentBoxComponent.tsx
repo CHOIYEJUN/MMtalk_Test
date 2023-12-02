@@ -71,7 +71,7 @@ const WeekContentBoxComponent:
           }}
         >
             <Image
-              source={require('../image/noData.png')} // 쓰레기통 아이콘 이미지 경로로 변경
+              source={require('../image/noData.png')}
               style={{ width: 200, height: 150, marginTop: 20}}
             />
             <Text style={{
@@ -120,14 +120,7 @@ const WeekContentBoxComponent:
 
         {todos.map((todo, index) => (
           <View key={index} style={styles.todoItem}>
-            {editMode ? (
-              <TouchableOpacity onPress={() => handleDeleteTodo(index)}>
-                <Image
-                  source={require('../image/delete-icon.png')} // 쓰레기통 아이콘 이미지 경로로 변경
-                  style={{ width: 20, height: 20}}
-                />
-              </TouchableOpacity>
-            ) : (
+            {!editMode && (
               <CheckBox
                 onValueChange={() => handleToggleTodo(index)}
                 value={todo.completed}
@@ -141,6 +134,19 @@ const WeekContentBoxComponent:
               ]}>
               {todo.content}
             </Text>
+
+            {editMode && (
+              <TouchableOpacity onPress={() => handleDeleteTodo(index)}>
+                <View
+                  style={styles.todoDelete}
+                >
+                  <Image
+                    source={require('../image/deleteBtn.png')} // 쓰레기통 아이콘 이미지 경로로 변경
+                    style={{ width: 25, height: 25}}
+                  />
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
         ))}
       </View>
@@ -154,6 +160,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     padding: 20,
+
   },
   header: {
     fontSize: 18,
@@ -169,14 +176,18 @@ const styles = StyleSheet.create({
   todoItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    textAlign : 'left',
-    marginBottom: 5,
+    marginBottom: 15,
     width: '80%',
     marginRight: 40,
-
   },
   todoText: {
     marginLeft: 10,
+    width: '100%',
+  },
+
+  todoDelete: {
+    marginLeft: 'auto',
+
   },
   input: {
     height: 40,
