@@ -126,3 +126,27 @@ i 에는 3이 들어가 버린 것이였다.... 왜냐면 prevData 는 0,1,2, "3
 그동안은 TextInput 에 글자를 입력하고 ADD 버튼을 눌러서 추가시켰는데... 
 이번에는 ADD 버튼만 눌렀을때 자판이 올라오게 하려면 어떻게 해야하는지 모르겠다..
 
+## 2023 12 02 
+
+> keyboard 를 띄워주는 기능은 없다고 한다..
+
+설마 TextInput 을 어딘가에 숨겨놓고 ADD 버튼을 누르면 숨겨놓은 textInput 에 포커싱을 하는
+이상한 방법으로 하면 안되겠지? 라고 생각했었지만
+
+#### 바로 그게 정답..ㅎㅎ
+
+```javascript
+<View 
+      style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, alignItems: 'center' }}
+    >
+  // 어딘가로 숨겨버린 textInput
+      <TextInput
+        style={{ position: 'absolute', left: -1000 }}
+        ref={textInputRef}
+        value={newTodo}
+        onChangeText={(text) => setNewTodo(text)}
+        onSubmitEditing={handleTextInputSubmit}
+      />
+      <Button title="Add" onPress={handleButtonPress} color={'#FF7484'} />
+    </View>
+````

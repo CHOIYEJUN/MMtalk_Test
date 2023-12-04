@@ -4,6 +4,7 @@ import { View, Text, SafeAreaView } from 'react-native';
 import WeekComponent from './components/WeekComponent';
 import WeekContentBoxComponent from './components/WeekContentBoxComponent';
 import AddButtonComponent from './components/AddButtonComponent';
+import TextInputButtonModule from "./components/ContentBoxModuls/TextInputButtonModule";
 
 const initialData = [
   {
@@ -151,6 +152,14 @@ const App: React.FC = () => {
     });
   };
 
+  const [newTodo, setNewTodo] = useState('');
+
+  const handleAddButtonTodo = () => {
+    if (newTodo.trim() !== '') {
+      handleAddTodo(selectedWeek, newTodo);
+      setNewTodo('');
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1}}>
@@ -194,6 +203,7 @@ const App: React.FC = () => {
           editMode={editMode} // editMode 상태 전달
         />
       )}
+      <TextInputButtonModule newTodo={newTodo} setNewTodo={setNewTodo} onAddTodo={handleAddButtonTodo} />
 
 
     </SafeAreaView>
