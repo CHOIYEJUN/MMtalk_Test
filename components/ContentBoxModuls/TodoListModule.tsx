@@ -13,7 +13,7 @@ interface TodoListModuleProps {
 const TodoListModule: React.FC<TodoListModuleProps> = ({ todos, editMode, handleToggleTodo, handleDeleteTodo }) => {
   return (
     <View
-      style={{ marginTop: 20, width: '100%', alignItems: 'center' }}
+      style={{ marginTop: 0, width: '100%', alignItems: 'center' }}
     >
       {todos.length === 0 && (
         <View

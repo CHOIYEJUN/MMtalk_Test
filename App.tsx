@@ -8,17 +8,17 @@ import TextInputButtonModule from "./components/ContentBoxModuls/TextInputButton
 
 const initialData = [
   {
-    weekNumber: 1,
+    weekNumber: 16,
     content: 'Track your ovulation cycle to an idea of when you will be ovulating.',
     completed: false,
   },
   {
-    weekNumber: 1,
+    weekNumber: 16,
     content: 'Study about symptoms of ovulation',
     completed: false,
   },
   {
-    weekNumber: 1,
+    weekNumber: 16,
     content: 'Take folic acid',
     completed: false,
   },
@@ -92,7 +92,7 @@ const App: React.FC = () => {
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    handleSelectWeek(1);
+    handleSelectWeek(15);
   }, []);
 
 
@@ -165,12 +165,11 @@ const App: React.FC = () => {
     <SafeAreaView style={{ flex: 1}}>
       <View
         style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+
           marginTop: 10,
           marginBottom: 10,
-          paddingHorizontal: 20, // 좌우 여백 조절
-          alignItems: 'center',
+          paddingHorizontal: 20,
+          alignItems: 'center', // 가로 방향으로 가운데 정렬 추가
           }}
       >
         <Text
@@ -182,9 +181,9 @@ const App: React.FC = () => {
         >CheckList</Text>
         <Text
           style={{
-            fontSize: 15,
-            fontWeight: 'bold',
-            textAlign: 'right',
+            position: 'absolute',
+            right: 20,
+            top: 5,
           }}
           onPress={handleEditTodo}
         >

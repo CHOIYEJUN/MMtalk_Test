@@ -12,7 +12,7 @@ const ProgressBarModule: React.FC<ProgressBarModuleProps> = ({ completedTodos, t
 
   return (
     <View
-      style={{ marginTop: 20, width: '100%', alignItems: 'center' }}
+      style={{ marginTop: 0, width: '100%', alignItems: 'center' }}
     >
       <View
         style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: 10 }}
@@ -24,7 +24,7 @@ const ProgressBarModule: React.FC<ProgressBarModuleProps> = ({ completedTodos, t
         style={{ height: 5, backgroundColor: 'lightgray', borderRadius: 5, width: '100%', marginBottom: 20 }}
       >
         <View
-          style={{ width: progressPercentage + '%', height: '100%', backgroundColor: '#FF7484', borderRadius: 5 }}
+          style={{ width: progressPercentage + '%', height: '100%', backgroundColor: '#44CEC6', borderRadius: 5 }}
         />
       </View>
     </View>

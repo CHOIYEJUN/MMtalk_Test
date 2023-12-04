@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 
 interface WeekComponentProps {
@@ -7,18 +7,27 @@ interface WeekComponentProps {
 }
 
 const WeekComponent: React.FC<WeekComponentProps> = ({ weeks, onSelectWeek  }) => {
-  const [selectedWeek, setSelectedWeek] = useState(1);
+  const [selectedWeek, setSelectedWeek] = useState(15);
   const scrollViewRef = useRef<ScrollView | null>(null);
+
+  useEffect(() => {
+    if (scrollViewRef.current) {
+      const centerIndex = selectedWeek - 1;
+      const offsetX = centerIndex * 43; // Adjust this value based on your button width
+      scrollViewRef.current.scrollTo({ x: offsetX, animated: true });
+    }
+  }, [selectedWeek]);
 
   const onPressWeek = (weekNumber: number) => {
     setSelectedWeek(weekNumber);
     onSelectWeek(weekNumber);
   }
 
+
   const onMomentumScrollEnd = (event: any) => {
     if (scrollViewRef.current) {
       const contentOffset = event.nativeEvent.contentOffset.x;
-      const centerIndex = Math.round(contentOffset / 55); // Adjust this value based on your button width
+      const centerIndex = Math.round(contentOffset / 45); // Adjust this value based on your button width
       const selectedWeekFromIndex = centerIndex + 1;
       setSelectedWeek(selectedWeekFromIndex);
       onSelectWeek(selectedWeekFromIndex);
@@ -32,8 +41,8 @@ const WeekComponent: React.FC<WeekComponentProps> = ({ weeks, onSelectWeek  }) =
         horizontal
         showsHorizontalScrollIndicator={false}
         onMomentumScrollEnd={onMomentumScrollEnd}
-        decelerationRate= 'fast'
-        scrollEventThrottle={16} // Adjust the throttle value if needed
+        decelerationRate={0.800}
+        scrollEventThrottle={5} // Adjust the throttle value if needed
       >
         {Array.from({ length: weeks }, (_, index) => index + 1).map((item) => (
           <TouchableOpacity
@@ -41,7 +50,7 @@ const WeekComponent: React.FC<WeekComponentProps> = ({ weeks, onSelectWeek  }) =
             onPress={() => onPressWeek(item)}
             style={[
               styles.weekButton,
-              { backgroundColor: selectedWeek === item ? '#FF7484' : '#eee' },
+              { backgroundColor: selectedWeek === item ? '#44CEC6' : '#eee' },
             ]}
           >
             <Text
