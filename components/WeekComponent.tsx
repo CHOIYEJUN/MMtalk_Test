@@ -27,7 +27,7 @@ const WeekComponent: React.FC<WeekComponentProps> = ({ weeks, onSelectWeek  }) =
   const onMomentumScrollEnd = (event: any) => {
     if (scrollViewRef.current) {
       const contentOffset = event.nativeEvent.contentOffset.x;
-      const centerIndex = Math.round(contentOffset / 45); // Adjust this value based on your button width
+      const centerIndex = Math.round(contentOffset / 43); // Adjust this value based on your button width
       const selectedWeekFromIndex = centerIndex + 1;
       setSelectedWeek(selectedWeekFromIndex);
       onSelectWeek(selectedWeekFromIndex);

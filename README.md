@@ -7,6 +7,30 @@
 
 [👉🏻 ReactNetive 공부의 흔적 보러가기 ](https://velog.io/@dpwns108)
 
+# 결과물 
+
+![결과물](https://github.com/CHOIYEJUN/MMtalk_Test/assets/87467631/3eb94a06-169b-45e6-8964-3b36c09a9817)
+
+구현한 기능
+
+1. TodoList 의 추가 삭제 
+2. TodoList 의 체크박스를 클릭했을때 체크기능 및 TodoList Progress Bar 연동
+3. Week Select 및 스크롤 기능
+
+
+느낀점
+1. 비슷하면서도 다른 react 와 reactNetive
+- react 는 html 태그를 사용하지만 reactNetive 는 View, Text, TextInput 등의 태그를 사용한다. 옌 웹 문서가 아니니까... ㅎㅎ)
+- 상태관리 방식이 비슷하다. (useState, useEffect, useRef 등등)
+- 이곳은 모바일 환경이다. ui 와 기능들이 웹과는 확연히다르다.
+- React Native는 거의 모든 CSS 기능을 구현하려고 노력했지만, CSS 애니메이션 구현 툴인 keyframes 는 옮겨오지 못했다. 그래서 복잡한 애니메이션을 구현하려면 복잡한 과정이 요구된다.
+- 디버깅이 쉽지 않다.. (죄다  console.log 찍어봐야 한다. )
+
+2. 이제 무엇을 해볼까
+- 일주일 동안 작성하고 공부했던 내용들을 기술블로그에 정리해볼것이다. 
+- reactNetive 를 이용해서 기존에 만들었던 배드민턴 게스트 예약 시스템을 모바일 환경으로 만들어볼것이다. (백엔드 API 와 통신하는 과정도 궁금하다.)
+
+# 문제의 발생과 해결
 
 
 ## 2023 11 30 문제봉착... 
