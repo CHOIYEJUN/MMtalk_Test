@@ -1,9 +1,3 @@
-## 23H2 Frontend Assignment for Global Dev Squad Applicants 
-
-
-## 한번도 안해본 ReactNetive 가 과제라니!!!
-
-> 우선 저에게 ReactNetive 를 배울 수 있는 강력한 동기를 부여해 주셔서 정말로 감사합니다 🥲🥲
 
 [👉🏻 ReactNetive 공부의 흔적 보러가기 ](https://velog.io/@dpwns108)
 
@@ -15,7 +9,7 @@
 
 1. TodoList 의 추가 삭제 
 2. TodoList 의 체크박스를 클릭했을때 체크기능 및 TodoList Progress Bar 연동
-3. Week Select 및 스크롤 기능
+3. Week Select 및 스크롤 에니메이션 기능
 
 
 느낀점
@@ -29,6 +23,7 @@
 2. 이제 무엇을 해볼까
 - 일주일 동안 작성하고 공부했던 내용들을 기술블로그에 정리해볼것이다. 
 - reactNetive 를 이용해서 기존에 만들었던 배드민턴 게스트 예약 시스템을 모바일 환경으로 만들어볼것이다. (백엔드 API 와 통신하는 과정도 궁금하다.)
+
 
 # 문제의 발생과 해결
 
